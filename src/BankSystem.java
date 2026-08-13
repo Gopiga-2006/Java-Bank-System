@@ -14,7 +14,9 @@ public class BankSystem {
             System.out.println("\n===== JAVA BANK SYSTEM =====");
             System.out.println("1. Create Account");
             System.out.println("2. Credit / Deposit");
-            System.out.println("3. Exit");
+            System.out.println("3. Debit / Withdraw");
+            System.out.println("4. Balance Check");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
 
@@ -26,12 +28,18 @@ public class BankSystem {
                     credit();
                     break;
                 case 3:
+                    debit();
+                    break;
+                case 4:
+                    checkBalance();
+                    break;
+                case 5:
                     System.out.println("Thank you for using Java Bank System.");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        } while (choice != 3);
+        } while (choice != 5);
     }
 
     // Create an account and prevent duplicate Account IDs using iteration.
@@ -78,6 +86,50 @@ public class BankSystem {
 
         account.setBalance(account.getBalance() + amount);
         System.out.println("Amount deposited successfully.");
+        System.out.println("Current Balance: " + account.getBalance());
+    }
+
+    // Debit means withdrawing money from the account.
+    static void debit() {
+        System.out.print("Enter Account ID: ");
+        int accountId = scanner.nextInt();
+
+        Account account = findAccount(accountId);
+        if (account == null) {
+            System.out.println("Account not found.");
+            return;
+        }
+
+        System.out.print("Enter withdrawal amount: ");
+        double amount = scanner.nextDouble();
+
+        if (amount <= 0) {
+            System.out.println("Amount must be greater than zero.");
+            return;
+        }
+
+        if (amount > account.getBalance()) {
+            System.out.println("Insufficient balance.");
+            return;
+        }
+
+        account.setBalance(account.getBalance() - amount);
+        System.out.println("Amount withdrawn successfully.");
+        System.out.println("Current Balance: " + account.getBalance());
+    }
+
+    // Display the current balance of an account.
+    static void checkBalance() {
+        System.out.print("Enter Account ID: ");
+        int accountId = scanner.nextInt();
+
+        Account account = findAccount(accountId);
+        if (account == null) {
+            System.out.println("Account not found.");
+            return;
+        }
+
+        System.out.println("Customer Name: " + account.getCustomerName());
         System.out.println("Current Balance: " + account.getBalance());
     }
 
