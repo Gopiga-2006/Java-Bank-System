@@ -47,6 +47,11 @@ public class BankSystem {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
+        if (accountId <= 0) {
+            System.out.println("Account ID must be greater than zero.");
+            return;
+        }
+
         // Manual search using iteration as required for Week 1.
         for (Account account : accounts) {
             if (account.getAccountId() == accountId) {
@@ -57,7 +62,12 @@ public class BankSystem {
 
         scanner.nextLine();
         System.out.print("Enter Customer Name: ");
-        String customerName = scanner.nextLine();
+        String customerName = scanner.nextLine().trim();
+
+        if (customerName.isEmpty()) {
+            System.out.println("Customer name cannot be empty.");
+            return;
+        }
 
         Account account = new Account(accountId, customerName, 0.0);
         accounts.add(account);
