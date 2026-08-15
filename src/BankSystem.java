@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class BankSystem {
 
-    // Week 1: ArrayList is used to store Account objects.
-    static ArrayList<Account> accounts = new ArrayList<>();
+    // Week 2: HashMap stores Account objects using Account ID as the key.
+    static HashMap<Integer, Account> accounts = new HashMap<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class BankSystem {
         } while (choice != 5);
     }
 
-    // Create an account and prevent duplicate Account IDs using iteration.
+    // Create an account. HashMap prevents duplicate IDs using containsKey().
     static void createAccount() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -52,12 +52,9 @@ public class BankSystem {
             return;
         }
 
-        // Manual search using iteration as required for Week 1.
-        for (Account account : accounts) {
-            if (account.getAccountId() == accountId) {
-                System.out.println("Account ID already exists.");
-                return;
-            }
+        if (accounts.containsKey(accountId)) {
+            System.out.println("Account ID already exists.");
+            return;
         }
 
         scanner.nextLine();
@@ -70,12 +67,12 @@ public class BankSystem {
         }
 
         Account account = new Account(accountId, customerName, 0.0);
-        accounts.add(account);
+        accounts.put(accountId, account);
 
         System.out.println("Account created successfully.");
     }
 
-    // Credit means depositing money into the account.
+    // Credit will use the HashMap lookup method.
     static void credit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -99,7 +96,7 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Debit means withdrawing money from the account.
+    // Debit will use the HashMap lookup method.
     static void debit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -128,7 +125,7 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Display the current balance of an account.
+    // Balance check will use the HashMap lookup method.
     static void checkBalance() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -143,14 +140,9 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Manual iteration is used to find an account in Week 1.
+    // Week 2: Direct lookup using HashMap.get(). No search loop is used.
     static Account findAccount(int accountId) {
-        for (Account account : accounts) {
-            if (account.getAccountId() == accountId) {
-                return account;
-            }
-        }
-        return null;
+        return accounts.get(accountId);
     }
 
     static class Account {
