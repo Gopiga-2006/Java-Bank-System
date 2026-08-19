@@ -42,7 +42,7 @@ public class BankSystem {
         } while (choice != 5);
     }
 
-    // Create an account. HashMap prevents duplicate IDs using containsKey().
+    // Create an account using HashMap.
     static void createAccount() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -72,12 +72,12 @@ public class BankSystem {
         System.out.println("Account created successfully.");
     }
 
-    // Credit will use the HashMap lookup method.
+    // Credit uses direct HashMap lookup through get().
     static void credit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        Account account = findAccount(accountId);
+        Account account = accounts.get(accountId);
         if (account == null) {
             System.out.println("Account not found.");
             return;
@@ -96,12 +96,12 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Debit will use the HashMap lookup method.
+    // Debit uses direct HashMap lookup through get().
     static void debit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        Account account = findAccount(accountId);
+        Account account = accounts.get(accountId);
         if (account == null) {
             System.out.println("Account not found.");
             return;
@@ -125,12 +125,12 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Balance check will use the HashMap lookup method.
+    // Balance check uses direct HashMap lookup through get().
     static void checkBalance() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        Account account = findAccount(accountId);
+        Account account = accounts.get(accountId);
         if (account == null) {
             System.out.println("Account not found.");
             return;
@@ -138,11 +138,6 @@ public class BankSystem {
 
         System.out.println("Customer Name: " + account.getCustomerName());
         System.out.println("Current Balance: " + account.getBalance());
-    }
-
-    // Week 2: Direct lookup using HashMap.get(). No search loop is used.
-    static Account findAccount(int accountId) {
-        return accounts.get(accountId);
     }
 
     static class Account {
