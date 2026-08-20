@@ -72,16 +72,17 @@ public class BankSystem {
         System.out.println("Account created successfully.");
     }
 
-    // Credit uses direct HashMap lookup through get().
+    // Credit uses the Account ID directly as a HashMap key.
     static void credit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        Account account = accounts.get(accountId);
-        if (account == null) {
+        if (!accounts.containsKey(accountId)) {
             System.out.println("Account not found.");
             return;
         }
+
+        Account account = accounts.get(accountId);
 
         System.out.print("Enter deposit amount: ");
         double amount = scanner.nextDouble();
@@ -96,16 +97,17 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Debit uses direct HashMap lookup through get().
+    // Debit uses the Account ID directly as a HashMap key.
     static void debit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        Account account = accounts.get(accountId);
-        if (account == null) {
+        if (!accounts.containsKey(accountId)) {
             System.out.println("Account not found.");
             return;
         }
+
+        Account account = accounts.get(accountId);
 
         System.out.print("Enter withdrawal amount: ");
         double amount = scanner.nextDouble();
@@ -125,16 +127,17 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Balance check uses direct HashMap lookup through get().
+    // Balance check uses the Account ID directly as a HashMap key.
     static void checkBalance() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        Account account = accounts.get(accountId);
-        if (account == null) {
+        if (!accounts.containsKey(accountId)) {
             System.out.println("Account not found.");
             return;
         }
+
+        Account account = accounts.get(accountId);
 
         System.out.println("Customer Name: " + account.getCustomerName());
         System.out.println("Current Balance: " + account.getBalance());
