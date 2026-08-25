@@ -1,10 +1,10 @@
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class BankSystem {
 
-    // Week 2: HashMap stores Account objects using Account ID as the key.
-    static HashMap<Integer, Account> accounts = new HashMap<>();
+    // Week 3: LinkedHashMap stores accounts and preserves insertion order.
+    static LinkedHashMap<Integer, Account> accounts = new LinkedHashMap<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -42,7 +42,7 @@ public class BankSystem {
         } while (choice != 5);
     }
 
-    // Create an account using HashMap.
+    // Create an account using LinkedHashMap.
     static void createAccount() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -72,7 +72,7 @@ public class BankSystem {
         System.out.println("Account created successfully.");
     }
 
-    // Credit uses the Account ID directly as a HashMap key.
+    // Credit uses the Account ID directly as a LinkedHashMap key.
     static void credit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -97,7 +97,7 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Debit uses the Account ID directly as a HashMap key.
+    // Debit uses the Account ID directly as a LinkedHashMap key.
     static void debit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -127,7 +127,7 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Balance check uses the Account ID directly as a HashMap key.
+    // Balance check uses the Account ID directly as a LinkedHashMap key.
     static void checkBalance() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
