@@ -16,7 +16,8 @@ public class BankSystem {
             System.out.println("2. Credit / Deposit");
             System.out.println("3. Debit / Withdraw");
             System.out.println("4. Balance Check");
-            System.out.println("5. Exit");
+            System.out.println("5. View All Accounts");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
 
@@ -34,12 +35,15 @@ public class BankSystem {
                     checkBalance();
                     break;
                 case 5:
+                    viewAllAccounts();
+                    break;
+                case 6:
                     System.out.println("Thank you for using Java Bank System.");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        } while (choice != 5);
+        } while (choice != 6);
     }
 
     // Create an account using LinkedHashMap.
@@ -141,6 +145,22 @@ public class BankSystem {
 
         System.out.println("Customer Name: " + account.getCustomerName());
         System.out.println("Current Balance: " + account.getBalance());
+    }
+
+    // LinkedHashMap values are displayed in the order accounts were created.
+    static void viewAllAccounts() {
+        if (accounts.isEmpty()) {
+            System.out.println("No accounts available.");
+            return;
+        }
+
+        System.out.println("\n===== ALL ACCOUNTS =====");
+        for (Account account : accounts.values()) {
+            System.out.println("Account ID: " + account.getAccountId());
+            System.out.println("Customer Name: " + account.getCustomerName());
+            System.out.println("Balance: " + account.getBalance());
+            System.out.println("------------------------");
+        }
     }
 
     static class Account {
