@@ -22,31 +22,17 @@ public class BankSystem {
             choice = scanner.nextInt();
 
             switch (choice) {
-                case 1:
-                    createAccount();
-                    break;
-                case 2:
-                    credit();
-                    break;
-                case 3:
-                    debit();
-                    break;
-                case 4:
-                    checkBalance();
-                    break;
-                case 5:
-                    viewAllAccounts();
-                    break;
-                case 6:
-                    System.out.println("Thank you for using Java Bank System.");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
+                case 1: createAccount(); break;
+                case 2: credit(); break;
+                case 3: debit(); break;
+                case 4: checkBalance(); break;
+                case 5: viewAllAccounts(); break;
+                case 6: System.out.println("Thank you for using Java Bank System."); break;
+                default: System.out.println("Invalid choice. Please try again.");
             }
         } while (choice != 6);
     }
 
-    // Create an account using LinkedHashMap.
     static void createAccount() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
@@ -55,7 +41,6 @@ public class BankSystem {
             System.out.println("Account ID must be greater than zero.");
             return;
         }
-
         if (accounts.containsKey(accountId)) {
             System.out.println("Account ID already exists.");
             return;
@@ -70,23 +55,19 @@ public class BankSystem {
             return;
         }
 
-        Account account = new Account(accountId, customerName, 0.0);
-        accounts.put(accountId, account);
-
+        accounts.put(accountId, new Account(accountId, customerName, 0.0));
         System.out.println("Account created successfully.");
     }
 
-    // Credit uses the Account ID directly as a LinkedHashMap key.
     static void credit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        if (!accounts.containsKey(accountId)) {
+        Account account = accounts.get(accountId);
+        if (account == null) {
             System.out.println("Account not found.");
             return;
         }
-
-        Account account = accounts.get(accountId);
 
         System.out.print("Enter deposit amount: ");
         double amount = scanner.nextDouble();
@@ -101,17 +82,15 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Debit uses the Account ID directly as a LinkedHashMap key.
     static void debit() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        if (!accounts.containsKey(accountId)) {
+        Account account = accounts.get(accountId);
+        if (account == null) {
             System.out.println("Account not found.");
             return;
         }
-
-        Account account = accounts.get(accountId);
 
         System.out.print("Enter withdrawal amount: ");
         double amount = scanner.nextDouble();
@@ -120,7 +99,6 @@ public class BankSystem {
             System.out.println("Amount must be greater than zero.");
             return;
         }
-
         if (amount > account.getBalance()) {
             System.out.println("Insufficient balance.");
             return;
@@ -131,23 +109,23 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // Balance check uses the Account ID directly as a LinkedHashMap key.
     static void checkBalance() {
         System.out.print("Enter Account ID: ");
         int accountId = scanner.nextInt();
 
-        if (!accounts.containsKey(accountId)) {
+        Account account = accounts.get(accountId);
+        if (account == null) {
             System.out.println("Account not found.");
             return;
         }
 
-        Account account = accounts.get(accountId);
-
+        System.out.println("\n===== ACCOUNT DETAILS =====");
+        System.out.println("Account ID: " + account.getAccountId());
         System.out.println("Customer Name: " + account.getCustomerName());
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // LinkedHashMap values are displayed in the order accounts were created.
+    // LinkedHashMap displays accounts in the same order they were created.
     static void viewAllAccounts() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
@@ -174,20 +152,9 @@ public class BankSystem {
             this.balance = balance;
         }
 
-        int getAccountId() {
-            return accountId;
-        }
-
-        String getCustomerName() {
-            return customerName;
-        }
-
-        double getBalance() {
-            return balance;
-        }
-
-        void setBalance(double balance) {
-            this.balance = balance;
-        }
+        int getAccountId() { return accountId; }
+        String getCustomerName() { return customerName; }
+        double getBalance() { return balance; }
+        void setBalance(double balance) { this.balance = balance; }
     }
 }
