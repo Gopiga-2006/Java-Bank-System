@@ -1,10 +1,10 @@
-import java.util.LinkedHashMap;
+import java.util.TreeMap;
 import java.util.Scanner;
 
 public class BankSystem {
 
-    // Week 3: LinkedHashMap stores accounts and preserves insertion order.
-    static LinkedHashMap<Integer, Account> accounts = new LinkedHashMap<>();
+    // Week 4: TreeMap stores accounts automatically in ascending Account ID order.
+    static TreeMap<Integer, Account> accounts = new TreeMap<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -125,7 +125,6 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // LinkedHashMap displays accounts in the same order they were created.
     static void viewAllAccounts() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
