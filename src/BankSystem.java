@@ -16,7 +16,7 @@ public class BankSystem {
             System.out.println("2. Credit / Deposit");
             System.out.println("3. Debit / Withdraw");
             System.out.println("4. Balance Check");
-            System.out.println("5. View All Accounts");
+            System.out.println("5. View All Accounts (Sorted by Account ID)");
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
@@ -125,14 +125,16 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
+    // TreeMap automatically displays accounts in ascending Account ID order.
     static void viewAllAccounts() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
             return;
         }
 
-        System.out.println("\n===== ALL ACCOUNTS =====");
-        for (Account account : accounts.values()) {
+        System.out.println("\n===== ALL ACCOUNTS (SORTED BY ACCOUNT ID) =====");
+        for (Integer accountId : accounts.keySet()) {
+            Account account = accounts.get(accountId);
             System.out.println("Account ID: " + account.getAccountId());
             System.out.println("Customer Name: " + account.getCustomerName());
             System.out.println("Balance: " + account.getBalance());
