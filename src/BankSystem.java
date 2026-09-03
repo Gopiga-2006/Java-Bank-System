@@ -1,5 +1,6 @@
-import java.util.TreeMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class BankSystem {
 
@@ -125,7 +126,7 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // TreeMap automatically displays accounts in ascending Account ID order.
+    // TreeMap automatically displays entries in ascending key order.
     static void viewAllAccounts() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
@@ -133,9 +134,9 @@ public class BankSystem {
         }
 
         System.out.println("\n===== ALL ACCOUNTS (SORTED BY ACCOUNT ID) =====");
-        for (Integer accountId : accounts.keySet()) {
-            Account account = accounts.get(accountId);
-            System.out.println("Account ID: " + account.getAccountId());
+        for (Map.Entry<Integer, Account> entry : accounts.entrySet()) {
+            Account account = entry.getValue();
+            System.out.println("Account ID: " + entry.getKey());
             System.out.println("Customer Name: " + account.getCustomerName());
             System.out.println("Balance: " + account.getBalance());
             System.out.println("------------------------");
