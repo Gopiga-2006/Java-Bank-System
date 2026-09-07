@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -7,6 +9,7 @@ public class BankSystem {
     // Week 4: TreeMap stores accounts automatically in ascending Account ID order.
     static TreeMap<Integer, Account> accounts = new TreeMap<>();
     static Scanner scanner = new Scanner(System.in);
+    static final String FILE_NAME = "accounts.txt";
 
     public static void main(String[] args) {
         int choice;
@@ -57,7 +60,22 @@ public class BankSystem {
         }
 
         accounts.put(accountId, new Account(accountId, customerName, 0.0));
+        saveAccountsToFile();
         System.out.println("Account created successfully.");
+    }
+
+    static void saveAccountsToFile() {
+        try (FileWriter writer = new FileWriter(FILE_NAME)) {
+            for (Map.Entry<Integer, Account> entry : accounts.entrySet()) {
+                Account account = entry.getValue();
+                writer.write(account.getAccountId() + ","
+                        + account.getCustomerName() + ","
+                        + account.getBalance() + "\n");
+            }
+            System.out.println("Account data saved to file.");
+        } catch (IOException e) {
+            System.out.println("Unable to save account data.");
+        }
     }
 
     static void credit() {
