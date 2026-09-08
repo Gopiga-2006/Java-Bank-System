@@ -97,6 +97,7 @@ public class BankSystem {
         }
 
         account.setBalance(account.getBalance() + amount);
+        saveAccountsToFile();
         System.out.println("Amount deposited successfully.");
         System.out.println("Current Balance: " + account.getBalance());
     }
@@ -124,6 +125,7 @@ public class BankSystem {
         }
 
         account.setBalance(account.getBalance() - amount);
+        saveAccountsToFile();
         System.out.println("Amount withdrawn successfully.");
         System.out.println("Current Balance: " + account.getBalance());
     }
