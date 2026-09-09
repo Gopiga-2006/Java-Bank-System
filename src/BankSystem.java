@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
@@ -6,12 +8,12 @@ import java.util.TreeMap;
 
 public class BankSystem {
 
-    // Week 4: TreeMap stores accounts automatically in ascending Account ID order.
     static TreeMap<Integer, Account> accounts = new TreeMap<>();
     static Scanner scanner = new Scanner(System.in);
     static final String FILE_NAME = "accounts.txt";
 
     public static void main(String[] args) {
+        loadAccountsFromFile();
         int choice;
 
         do {
@@ -72,9 +74,27 @@ public class BankSystem {
                         + account.getCustomerName() + ","
                         + account.getBalance() + "\n");
             }
-            System.out.println("Account data saved to file.");
         } catch (IOException e) {
             System.out.println("Unable to save account data.");
+        }
+    }
+
+    static void loadAccountsFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                if (data.length == 3) {
+                    int accountId = Integer.parseInt(data[0]);
+                    String customerName = data[1];
+                    double balance = Double.parseDouble(data[2]);
+                    accounts.put(accountId, new Account(accountId, customerName, balance));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("No existing account data found.");
         }
     }
 
@@ -146,7 +166,6 @@ public class BankSystem {
         System.out.println("Current Balance: " + account.getBalance());
     }
 
-    // TreeMap automatically displays entries in ascending key order.
     static void viewAllAccounts() {
         if (accounts.isEmpty()) {
             System.out.println("No accounts available.");
