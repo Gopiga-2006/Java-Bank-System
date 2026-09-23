@@ -10,10 +10,10 @@ public class BankSystem {
 
     static TreeMap<Integer, Account> accounts = new TreeMap<>();
     static Scanner scanner = new Scanner(System.in);
-    static final String FILE_NAME = "accounts.txt";
+    static final String FILE_NAME = "accounts.csv";
 
     public static void main(String[] args) {
-        loadAccountsFromFile();
+        loadAccountsFromCsv();
         int choice;
 
         do {
@@ -62,12 +62,13 @@ public class BankSystem {
         }
 
         accounts.put(accountId, new Account(accountId, customerName, 0.0));
-        saveAccountsToFile();
+        saveAccountsToCsv();
         System.out.println("Account created successfully.");
     }
 
-    static void saveAccountsToFile() {
+    static void saveAccountsToCsv() {
         try (FileWriter writer = new FileWriter(FILE_NAME)) {
+            writer.write("Account ID,Customer Name,Balance\n");
             for (Map.Entry<Integer, Account> entry : accounts.entrySet()) {
                 Account account = entry.getValue();
                 writer.write(account.getAccountId() + ","
@@ -79,23 +80,9 @@ public class BankSystem {
         }
     }
 
-    static void loadAccountsFromFile() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-
-                if (data.length == 3) {
-                    int accountId = Integer.parseInt(data[0]);
-                    String customerName = data[1];
-                    double balance = Double.parseDouble(data[2]);
-                    accounts.put(accountId, new Account(accountId, customerName, balance));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("No existing account data found.");
-        }
+    static void loadAccountsFromCsv() {
+        // Week 6 commit 1: CSV structure is introduced.
+        // Loading existing CSV data will be completed in a later Week 6 commit.
     }
 
     static void credit() {
@@ -117,7 +104,7 @@ public class BankSystem {
         }
 
         account.setBalance(account.getBalance() + amount);
-        saveAccountsToFile();
+        saveAccountsToCsv();
         System.out.println("Amount deposited successfully.");
         System.out.println("Current Balance: " + account.getBalance());
     }
@@ -145,7 +132,7 @@ public class BankSystem {
         }
 
         account.setBalance(account.getBalance() - amount);
-        saveAccountsToFile();
+        saveAccountsToCsv();
         System.out.println("Amount withdrawn successfully.");
         System.out.println("Current Balance: " + account.getBalance());
     }
