@@ -13,7 +13,6 @@ public class BankSystem {
     static final String FILE_NAME = "accounts.csv";
 
     public static void main(String[] args) {
-        loadAccountsFromCsv();
         int choice;
 
         do {
@@ -78,11 +77,6 @@ public class BankSystem {
         } catch (IOException e) {
             System.out.println("Unable to save account data.");
         }
-    }
-
-    static void loadAccountsFromCsv() {
-        // Week 6 commit 1: CSV structure is introduced.
-        // Loading existing CSV data will be completed in a later Week 6 commit.
     }
 
     static void credit() {
