@@ -13,6 +13,7 @@ public class BankSystem {
     static final String FILE_NAME = "accounts.csv";
 
     public static void main(String[] args) {
+        loadAccountsFromCsv();
         int choice;
 
         do {
@@ -76,6 +77,27 @@ public class BankSystem {
             }
         } catch (IOException e) {
             System.out.println("Unable to save account data.");
+        }
+    }
+
+    static void loadAccountsFromCsv() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line = reader.readLine();
+
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+
+                if (data.length == 3) {
+                    int accountId = Integer.parseInt(data[0]);
+                    String customerName = data[1];
+                    double balance = Double.parseDouble(data[2]);
+                    accounts.put(accountId, new Account(accountId, customerName, balance));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("No existing account data found.");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid account data in CSV file.");
         }
     }
 
