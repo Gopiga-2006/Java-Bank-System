@@ -11,6 +11,7 @@ public class BankSystem {
     static TreeMap<Integer, Account> accounts = new TreeMap<>();
     static Scanner scanner = new Scanner(System.in);
     static final String FILE_NAME = "accounts.csv";
+    static final String JSON_FILE = "accounts.json";
 
     public static void main(String[] args) {
         loadAccountsFromCsv();
@@ -63,6 +64,7 @@ public class BankSystem {
 
         accounts.put(accountId, new Account(accountId, customerName, 0.0));
         saveAccountsToCsv();
+        saveAccountsToJson();
         System.out.println("Account created successfully.");
     }
 
@@ -80,9 +82,35 @@ public class BankSystem {
         }
     }
 
+    static void saveAccountsToJson() {
+        try (FileWriter writer = new FileWriter(JSON_FILE)) {
+            writer.write("{\n  \"accounts\": [\n");
+
+            int count = 0;
+            for (Account account : accounts.values()) {
+                writer.write("    {\n");
+                writer.write("      \"accountId\": " + account.getAccountId() + ",\n");
+                writer.write("      \"customerName\": \"" + account.getCustomerName() + "\",\n");
+                writer.write("      \"balance\": " + account.getBalance() + "\n");
+                writer.write("    }");
+
+                count++;
+                if (count < accounts.size()) {
+                    writer.write(",");
+                }
+                writer.write("\n");
+            }
+
+            writer.write("  ]\n}\n");
+        } catch (IOException e) {
+            System.out.println("Unable to save JSON account data.");
+        }
+    }
+
     static void loadAccountsFromCsv() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line = reader.readLine();
+            reader.readLine();
+            String line;
 
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -121,6 +149,7 @@ public class BankSystem {
 
         account.setBalance(account.getBalance() + amount);
         saveAccountsToCsv();
+        saveAccountsToJson();
         System.out.println("Amount deposited successfully.");
         System.out.println("Current Balance: " + account.getBalance());
     }
@@ -149,6 +178,7 @@ public class BankSystem {
 
         account.setBalance(account.getBalance() - amount);
         saveAccountsToCsv();
+        saveAccountsToJson();
         System.out.println("Amount withdrawn successfully.");
         System.out.println("Current Balance: " + account.getBalance());
     }
